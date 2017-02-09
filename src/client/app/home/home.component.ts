@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   public uploader: FileUploader = new FileUploader( {url: URL} );
   public hasBaseDropZoneOver:boolean = false;
   public hasAnotherDropZoneOver:boolean = false;
+  public processedImagePath:string = "";
 
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
@@ -26,6 +27,12 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.uploader.onCompleteItem = (item: any, response: any, headers: any) => {
+      console.log(item);
+      console.dir(JSON.parse(response).processedFile);
+      console.log(headers);
+      this.processedImagePath = `${URL}${JSON.parse(response).processedFile}`;
+    };
   }
 
 }
